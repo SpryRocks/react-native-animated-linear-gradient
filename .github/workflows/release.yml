@@ -1,32 +1,19 @@
-name: Release CI
-
+name: Publish package
 on:
-  release:
-    types: [published]
-
+  push
 jobs:
-  build:
-
+  publish:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [12.x]
-
+    permissions:
+      contents: read
+      packages: write
     steps:
-    - uses: actions/checkout@v1
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: yarn build
-      run: |
-        yarn
-        yarn build
-      env:
-        CI: true
-    - name: npm login & publish
-      run: |
-        echo '//registry.npmjs.org/:_authToken=${{secrets.NPM_TOKEN}}' > ~/.npmrc
-        npm publish
-        
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+          registry-url: 'https://registry.npmjs.org'
+      - run: yarn && yarn build
+      - run: yarn publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
