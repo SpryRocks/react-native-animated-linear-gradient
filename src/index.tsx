@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import {Animated, Easing, StyleProp, StyleSheet, ViewStyle} from 'react-native';
-import {Component, PropsWithChildren} from 'react';
+import {Component, PropsWithChildren, ReactNode} from 'react';
 import NativeLinearGradient from 'react-native-linear-gradient';
 import rgb2hex from 'rgb2hex';
 
@@ -17,6 +17,29 @@ type LinearGradientProps = {
   gradientStyle?: StyleProp<ViewStyle>;
 };
 
+function needFillHeight({
+  children,
+  gradientStyle,
+}: {
+  children: ReactNode | null | undefined;
+  gradientStyle: StyleProp<ViewStyle>;
+}) {
+  if (children) {
+    return false;
+  }
+  if (gradientStyle && Array.isArray(gradientStyle) && gradientStyle.length > 0) {
+    return false;
+  }
+  if (
+    gradientStyle &&
+    typeof gradientStyle === 'object' &&
+    Object.keys(gradientStyle).length > 0
+  ) {
+    return false;
+  }
+  return true;
+}
+
 class LinearGradient extends Component<PropsWithChildren<LinearGradientProps>> {
   render() {
     const {color0, color1, children, points, gradientStyle} = this.props;
@@ -27,7 +50,10 @@ class LinearGradient extends Component<PropsWithChildren<LinearGradientProps>> {
         colors={[color0, color1].map((c) => rgb2hex(c).hex)}
         start={gStart}
         end={gEnd}
-        style={[!children && !gradientStyle && styles.fillHeight, gradientStyle]}
+        style={[
+          needFillHeight({children, gradientStyle}) && styles.fillHeight,
+          gradientStyle,
+        ]}
       >
         {children}
       </NativeLinearGradient>
