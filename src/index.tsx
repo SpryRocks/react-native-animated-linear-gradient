@@ -1,2 +1,2 @@
 export {Color, Point} from './types';
-export {AnimatedGradient} from './AnimatedGradient';
+export {AnimatedGradient as default} from './AnimatedGradient';
