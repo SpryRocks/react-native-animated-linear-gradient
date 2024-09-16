@@ -1,3 +1,5 @@
+/** @format */
+
 import {Animated, Easing, StyleProp, StyleSheet, ViewStyle} from 'react-native';
 import {useEffect, useMemo, useRef} from 'react';
 
@@ -14,7 +16,9 @@ const baseStyles = StyleSheet.create({
     bottom: 0,
     width: '200%',
   },
-  contentContainer: {},
+  contentContainer: {
+    alignSelf: 'stretch',
+  },
 });
 
 type UseStylesOptions = {
