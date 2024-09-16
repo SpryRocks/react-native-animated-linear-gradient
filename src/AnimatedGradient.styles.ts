@@ -1,3 +1,5 @@
+/** @format */
+
 import {Animated, Easing, StyleProp, StyleSheet, ViewStyle} from 'react-native';
 import {useEffect, useMemo, useRef} from 'react';
 
@@ -6,13 +8,13 @@ import {Color} from './types';
 const baseStyles = StyleSheet.create({
   container: {
     overflow: 'hidden',
-    alignItems: 'flex-end',
   },
   gradient: {
     position: 'absolute',
     top: 0,
     bottom: 0,
     width: '200%',
+    alignSelf: 'flex-end',
   },
   contentContainer: {},
 });
