@@ -8,17 +8,15 @@ import {Color} from './types';
 const baseStyles = StyleSheet.create({
   container: {
     overflow: 'hidden',
-    alignItems: 'flex-end',
   },
   gradient: {
     position: 'absolute',
     top: 0,
     bottom: 0,
     width: '200%',
+    alignSelf: 'flex-end',
   },
-  contentContainer: {
-    alignSelf: 'stretch',
-  },
+  contentContainer: {},
 });
 
 type UseStylesOptions = {
